@@ -76,6 +76,15 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         {
             Debug.Log($"{player.Value.NickName}, {player.Value.ActorNumber}");
         }
+
+        //출현 위치 정보를 배열에 저장
+        Transform[] points = GameObject.Find("SpawnPointGroup").GetComponentsInChildren<Transform>();
+        int idx = Random.Range(1, points.Length);
+
+        //네트워크상에 캐릭터 생성
+        PhotonNetwork.Instantiate("Player", points[idx].position, points[idx].rotation, 0);
+        //네트워크 객체를 생성하기 위해서는 반드시 PhotonNetwork.Instantiate를 사용해야함.
+        //해당 프리팹은 PhotonView컴포넌트를 가지고 있어야 함.
     }
 
 }

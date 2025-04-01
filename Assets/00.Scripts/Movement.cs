@@ -1,4 +1,7 @@
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
+using Cinemachine;
 
 
 public class Movement : MonoBehaviour
@@ -17,12 +20,29 @@ public class Movement : MonoBehaviour
     //이동 속도
     public float moveSpeed = 10.0f;
 
+    //PhotonView 컴포넌트 캐시 처리를 위한 변수
+    private PhotonView pv;
+
+    //시네머신 가상 카메라를 저장할 변수
+    private CinemachineVirtualCamera virtualCamera;
+    
+
     private void Start()
     {
         controller = GetComponent<CharacterController>();
         transform = GetComponent<Transform>();
         animator = GetComponent<Animator>();
         camera = Camera.main;
+
+        pv = GetComponent<PhotonView>();
+        virtualCamera = GameObject.FindObjectOfType<CinemachineVirtualCamera>();
+        
+        //PhotonView가 자신의 것일 경우 시네머신 가상카메라를 연결
+        if(pv.IsMine)
+        {
+            virtualCamera.Follow = transform;
+            virtualCamera.LookAt = transform;
+        }
 
         //가상의 바닥을 주인공의 위치를 기준으로 생성
         plane = new Plane(transform.up, transform.position);
@@ -31,8 +51,12 @@ public class Movement : MonoBehaviour
 
     private void Update()
     {
-        Move();
-        Turn();
+        //자신이 생성한 네트워크 객체만 컨트롤
+        if (pv.IsMine)
+        {
+            Move();
+            Turn();
+        }
     }
 
     //키보드 입력값 연결
