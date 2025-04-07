@@ -1,9 +1,3 @@
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ConnectAndJoinRandomLb.cs" company="Exit Games GmbH"/>
-// <summary>Prototyping / sample code for Photon Realtime.</summary>
-// <author>developer@exitgames.com</author>
-// --------------------------------------------------------------------------------------------------------------------
-
 using System.Collections.Generic;
 using ExitGames.Client.Photon;
 using UnityEngine;
