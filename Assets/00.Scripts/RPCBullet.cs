@@ -6,6 +6,9 @@ public class RPCBullet : MonoBehaviour
 {
     public GameObject effect;
 
+    //총알을 발사한 플레이어의 고유 번호
+    public int actorNumber;
+    
     // Start is called before the first frame update
     void Start()
     {
